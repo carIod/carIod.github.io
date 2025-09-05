@@ -1,3 +1,11 @@
 #!/bin/sh
 
-echo "test"
+# Ссылка на репозиторий на GitHub для получения крайней версии пакета
+release_url=https://api.github.com/repos/carIod/kvl/releases/latest
+# достаём первую ссылку на .ipk
+echo "Получаем ссылку на крайний релиз пакета на GitHub"
+package_url=$(curl -s "$release_url" | sed -n 's/.*"browser_download_url": "\(.*\.ipk\)".*/\1/p' | head -n1)
+echo "Скачиваем пакет: $package_url"
+curl -LO "$package_url"
+echo "Запускаем установку ipk"
+opkg install "$(basename "$package_url")"
