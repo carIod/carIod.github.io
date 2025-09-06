@@ -8,4 +8,6 @@ package_url=$(curl -s "$release_url" | sed -n 's/.*"browser_download_url": "\(.*
 echo "Скачиваем пакет: $package_url"
 curl -LO "$package_url"
 echo "Запускаем установку ipk"
-opkg install "$(basename "$package_url")"
+#opkg install "$(basename "$package_url")"
+echo "opkg install $(basename "$package_url")"
+
