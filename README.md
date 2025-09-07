@@ -1,2 +1,1 @@
 Test
-<a href="/kvl/install" download>Скачать kvl install</a>
