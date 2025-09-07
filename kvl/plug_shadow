@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Ссылка на репозиторий на GitHub для получения крайней версии пакета
+release_url=https://api.github.com/repos/carIod/kvl-plugin-shadowsocks/releases/latest
+# достаём первую ссылку на .ipk
+echo "Получаем ссылку на крайний релиз пакета на GitHub"
+package_url=$(curl -s "$release_url" | sed -n 's/.*"browser_download_url": "\(.*\.ipk\)".*/\1/p' | head -n1)
+if [ -z "$package_url" ]; then 
+  echo "Не удалось получить ссылку на крайний релиз плагина, проверте доступность репозитария"
+  exit 1
+fi
+echo "Скачиваем пакет: $package_url"
+if curl -LfO "$package_url"; then
+  echo "Запускаем установку ipk"
+  #opkg install "$(basename "$package_url")"
+  echo "opkg install $(basename "$package_url")"
+else
+  echo "Не удалось скачать пакет: $package_url"
+fi
+
